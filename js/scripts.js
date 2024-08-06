@@ -1,48 +1,49 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Manejadores de eventos para los disparadores de modales
     var modalTriggers = document.querySelectorAll('.modal-trigger');
+    var modals = document.querySelectorAll('.modal');
+    var closeButtons = document.querySelectorAll('.close');
+
     modalTriggers.forEach(function (trigger) {
-        trigger.addEventListener('click', function (event) {
-            event.preventDefault();
+        trigger.addEventListener('click', function () {
             var modalId = this.getAttribute('data-modal');
             var modal = document.getElementById(modalId);
-            if (modal) {
-                modal.style.display = 'flex'; // Mostrar el modal
-            }
+            modal.style.display = 'block';
         });
     });
 
-    // Manejadores de eventos para los botones de cierre de modales
-    var closeButtons = document.querySelectorAll('.close');
     closeButtons.forEach(function (button) {
         button.addEventListener('click', function () {
             var modal = this.closest('.modal');
-            if (modal) {
-                modal.style.display = 'none'; // Ocultar el modal
+            modal.style.display = 'none';
+        });
+    });
+
+    window.addEventListener('click', function (event) {
+        modals.forEach(function (modal) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
             }
         });
     });
 
-    // Cerrar el modal si se hace clic fuera de él
-    window.onclick = function (event) {
-        if (event.target.classList.contains('modal')) {
-            event.target.style.display = 'none'; // Ocultar el modal
-        }
+    var slides = document.querySelectorAll('.project-slide');
+    var currentSlide = 0;
+
+    function showSlide(index) {
+        slides.forEach((slide, i) => {
+            slide.style.display = i === index ? 'block' : 'none';
+        });
     }
 
-    // Manejo de la navegación entre imágenes en el modal de proyectos
-    var currentIndex = 0;
-    var projectContainers = document.querySelectorAll('#projectsModal .project-container');
-    var totalImages = projectContainers.length;
+    document.querySelector('.prev').addEventListener('click', function () {
+        currentSlide = (currentSlide > 0) ? currentSlide - 1 : slides.length - 1;
+        showSlide(currentSlide);
+    });
 
-    function showImage(index) {
-        if (index >= 0 && index < totalImages) { // Verificar índice válido
-            projectContainers.forEach((container, i) => {
-                container.style.display = (i === index) ? 'flex' : 'none';
-            });
-        }
-    }
+    document.querySelector('.next').addEventListener('click', function () {
+        currentSlide = (currentSlide < slides.length - 1) ? currentSlide + 1 : 0;
+        showSlide(currentSlide);
+    });
 
-    // Ejemplo de cómo usar la función showImage
-    // Llama a showImage(currentIndex) cuando quieras mostrar una imagen específica
+    showSlide(currentSlide);
 });
