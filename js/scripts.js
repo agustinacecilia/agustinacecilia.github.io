@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function showSlide(index) {
         slides.forEach((slide, i) => {
-            slide.style.display = i === index ? 'block' : 'none';
+            slide.classList.toggle('active', i === index);
         });
     }
 

@@ -36,7 +36,8 @@ header {
     font-optical-sizing: auto;
     font-weight: 400;
     font-style: normal;
-    font-variation-settings: "YEAR" 1979;
+    font-variation-settings:
+        "YEAR" 1979;
     color: aliceblue;
     margin: 1;
 }
@@ -70,12 +71,13 @@ ul li {
 ul li a {
     color: #fff;
     text-decoration: none;
+
     font-size: 1.2rem;
     font-weight: bold;
     display: block;
     text-align: center;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.05en;
     transition: 0.5s;
 }
 
@@ -95,50 +97,75 @@ ul li::before {
     left: -40px;
     width: 40px;
     height: 100%;
-    background: #1f2021;
+    background: #b31d3f;
+    transform-origin: right;
     transform: skewY(45deg);
     transition: 0.5s;
-    pointer-events: none;
 }
 
 ul li:hover::before {
     background: #f27a8a;
-    transform: skewY(45deg) translateX(40px);
 }
 
-ul li:hover ~ li {
-    transform: translateX(0px);
+ul li::after {
+    content: '';
+    position: absolute;
+    top: -40px;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: #b31d3f;
+    transform-origin: bottom;
+    transform: skewX(45deg);
+    transition: 0.5s;
+}
+
+ul li:hover::after {
+    background: #f27a8a;
+}
+
+ul li:last-child::after {
+    box-shadow: -100px 100px 20px rgba(0, 0, 0, 0.25);
 }
 
 footer {
-    font-size: 1rem;
-    color: #333;
-    margin: 20px 0;
+    margin-top: 60px;
+    /* Margen superior de 60px */
+    padding: 10px 0;
+    width: 100%;
 }
 
-/* Estilos para el modal */
+footer p {
+    margin: 0;
+    color: aliceblue;
+    font-size: 1rem;
+    font-family: 'Share Tech Mono', serif;
+    text-align: center;
+}
+
 .modal {
     display: none;
+    /* Initially hidden */
     position: fixed;
     z-index: 1;
-    padding-top: 100px;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modal-content {
-    background-color: #fefefe;
-    margin: auto;
+    background-color: #E9F6A0;
+    margin: 10% auto;
     padding: 20px;
-    border: 1px solid #888;
+    border: 1px solid #4D5F15;
     width: 80%;
-    max-width: 1000px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-    overflow: auto;
+    max-width: 600px;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden; /* Evita que el contenido se desborde */
 }
 
 .close {
@@ -157,34 +184,34 @@ footer {
 
 .project-gallery {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-}
-
-.project-container {
-    flex: 0 0 45%;
-    margin: 10px;
-}
-
-.project-slide {
-    display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     overflow: hidden;
 }
 
-.project-img {
+.project-slide {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: 100%;
+    max-width: 600px;
+    margin: 20px 0;
+}
+
+.project-slide.active {
+    display: flex;
+}
+
+.project-img {
+    max-width: 100%;
     height: auto;
-    max-height: 400px;
-    object-fit: contain;
-    margin-bottom: 10px;
 }
 
 .project-caption {
     text-align: center;
     font-size: 1rem;
+    margin-top: 10px;
 }
 
 button.prev,
@@ -201,3 +228,4 @@ button.prev:hover,
 button.next:hover {
     background-color: #f27a8a;
 }
+
